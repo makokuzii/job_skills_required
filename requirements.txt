@@ -3,3 +3,10 @@ pandas
 gunicorn
 dash_bootstrap_templates
 lxml
+plotly.graph_objects
+plotly.express
+holoviews
+dash_html_components
+dash_core_components
+dash_bootstrap_components
+dash.dependencies
