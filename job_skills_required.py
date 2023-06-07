@@ -34,7 +34,7 @@ students in prioritizing the skills necessary for their chosen career trajectory
 app.config.suppress_callback_exceptions = True
 
 # Read the automobiles data into pandas dataframe
-all_job = pd.read_csv('/Users/Mako/Downloads/joined_job_title.csv')
+all_job = pd.read_html('https://github.com/MakoTheGreat/job_skills_required/blob/main/joined_job_title.csv')[0]
 
 # Picked out keywords based on all keywords for the data analyst intern
 keywords_programming = [
