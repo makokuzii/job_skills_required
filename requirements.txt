@@ -3,7 +3,7 @@ pandas
 gunicorn
 dash_bootstrap_templates
 lxml
-plotly.graph_objects
+plotly
 plotly.express
 holoviews
 dash_html_components
