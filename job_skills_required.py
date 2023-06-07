@@ -362,5 +362,5 @@ def get_graph(job_title, skills):
     return 'Please Select a Job Title and Skill above to see the chart below*'
 
 if __name__ == '__main__':
-    app.run_server(debug = False)
+    app.run_server(debug = True)
     
