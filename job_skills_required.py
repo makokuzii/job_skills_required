@@ -15,6 +15,8 @@ load_figure_template("bootstrap")
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
+server = app.server
+
 # create a markdown text on the web application
 markdown_text = '''
 ### Notes:
