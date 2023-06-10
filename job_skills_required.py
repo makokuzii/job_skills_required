@@ -1,6 +1,7 @@
 # import necessary libraries
 import pandas as pd
 import nltk
+from nltk.tokenize import word_tokenize, RegexpTokenizer
 import plotly.graph_objects as go
 import plotly.express as px
 import dash_bootstrap_components as dbc
@@ -36,11 +37,13 @@ students in prioritizing the skills necessary for their chosen career trajectory
 app.config.suppress_callback_exceptions = True
 
 # Read the automobiles data into pandas dataframe
-tokenizer = nltk.tokenize.RegexpTokenizer(r'\w+')
+word_tokenizer = nltk.tokenize.word_tokenize
+regexp_tokenizer = nltk.tokenize.RegexpTokenizer(r'\w+')
 all_job = pd.read_csv('joined_job_title.csv')
 all_job.fillna('', inplace=True)
 all_job['description_tokens'] = all_job['description_tokens'].str.replace("'", "")
-all_job['description_tokens'] = all_job['description_tokens'].apply(lambda x: tokenizer.tokenize(x.lower()))
+all_job['description_tokens'] = all_job['description_tokens'].apply(lambda x: word_tokenizer(x.lower()) \
+                                                                    if len(x.split()) > 1 else regexp_tokenizer.tokenize(x.lower()))
 
 # Picked out keywords based on all keywords for the data analyst intern
 keywords_programming = [
