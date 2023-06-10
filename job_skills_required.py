@@ -38,7 +38,6 @@ app.config.suppress_callback_exceptions = True
 
 # Read the automobiles data into pandas dataframe
 word_tokenizer = nltk.tokenize.word_tokenize
-regexp_tokenizer = nltk.tokenize.RegexpTokenizer(r'\w+')
 all_job = pd.read_csv('joined_job_title.csv')
 all_job.fillna('', inplace=True)
 all_job['description_tokens'] = all_job['description_tokens'].str.replace("'", "")
