@@ -17,7 +17,10 @@ from dash_bootstrap_templates import load_figure_template
 # load the template that i personally liked
 load_figure_template("bootstrap")
 
-app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP],
+            meta_tags=[{'name': 'viewport',
+                        'content': 'width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,'}]
+           )
 server = app.server
 
 # create a markdown text on the web application
@@ -105,55 +108,151 @@ language_skills = [
 # Total Skills
 total_skills = soft_skills + financial_skills + technical_skills + language_skills
 
-# Layout Section of Dash
 app.layout = html.Div(children=[
-    html.H1('Top Skills Needed for the MSc Students in Data Management for Finance 👩‍🎓',
-            style={'textAlign': "center", 'color': '#0D0D0D',
-                   'background-color': '#F0F0F0', 'padding': '10px',
-                   'border-radius': '5px', 'margin': '10px',
-                   'font': 'bold', 'font-size': '35px'}),
-    html.Br(), # create space after heading
-    html.Br(), # create space after heading
-    html.Div([
-    # customized the style of the text using markdown
-    dcc.Markdown(children=markdown_text, style = {'text-align': 'justify', 'text-align-last': 'left', 
-                                                  'margin-left' : '2.3em', 'margin-right' : '5em'}),
+    dbc.Row([
+        dbc.Col(
+            [
+                html.H1(
+                    'Top Skills Needed for the MSc Students in Data Management for Finance 👩‍🎓',
+                    style={
+                        'textAlign': "center",
+                        'color': '#0D0D0D',
+                        'background-color': '#F0F0F0',
+                        'padding': '10px',
+                        'border-radius': '5px',
+                        'margin': '10px',
+                        'font': 'bold',
+                        'font-size': '35px'
+                    }
+                ),
+                html.Br(),  # create space after heading
+                html.Br(),  # create space after heading
+                html.Div(
+                    [
+                        # Customize the style of the text using markdown
+                        dcc.Markdown(
+                            children=markdown_text,
+                            style={
+                                'text-align': 'justify',
+                                'text-align-last': 'left',
+                                'margin-left': '2.3em',
+                                'margin-right': '5em'
+                            }
+                        ),
+                    ]
+                ),
+            ],
+        )
+    ], align='center'),
+    html.Br(),  # create space after markdown
+
+    dbc.Row([
+        dbc.Col(
+            [
+                html.Div(
+                    [
+                        html.Div(
+                            [
+                                html.Div(
+                                    [
+                                        html.H2(
+                                            'Job Title:',
+                                            style={
+                                                'margin-right': '2em',
+                                                'margin-left': '1em',
+                                                'padding': '5px',
+                                            }
+                                        ),
+                                    ]
+                                ),
+                                # Customize the drop-down for job title
+                                dcc.Dropdown(
+                                    id='input-job-title',
+                                    options=[
+                                        {'label': 'Data Analyst Intern', 'value': 'data analyst intern'},
+                                        {'label': 'Finance Intern', 'value': 'finance intern'}
+                                    ],
+                                    placeholder='Select Job Title',
+                                    style={
+                                        'padding': '2px',
+                                        'font-size': '20px',
+                                        'text-align-last': 'center',
+                                        'flex': 0.855
+                                    }
+                                ),
+                            ], style={'display': 'flex'},
+                        ),
+                    ]
+                ),
+                dbc.Col(
+                    [
+                        html.Div(
+                            [
+                                html.Div(
+                                    [
+                                        html.H2(
+                                            'Skills:',
+                                            style={
+                                                'margin-right': '3.45em',
+                                                'margin-left': '1em',
+                                                'padding': '5px'
+                                            }
+                                        )
+                                    ]
+                                ),
+                                # Customize the drop-down for skills
+                                dcc.Dropdown(
+                                    id='input-skills',
+                                    placeholder="Select Skill",
+                                    style={
+                                        'padding': '2px',
+                                        'font-size': '20px',
+                                        'text-align-last': 'center',
+                                        'flex': 0.855
+                                    }
+                                ),
+                            ], style={'display': 'flex'},
+                        ),
+                    ]
+                ),
+            ],
+            align='center'
+        )
     ]),
-    html.Br(), # create space after markdown
-    html.Div([
-        html.Div([
-            html.Div([
-                html.H2('Job Title:', style={'margin-right': '2em', 'margin-left' : '1em', 'padding' : '5px'}),
-            ]),
-            # customize the drop down for job title
-            dcc.Dropdown(
-                id='input-job-title',
-                options=[
-                    {'label': 'Data Analyst Intern', 'value': 'data analyst intern'},
-                    {'label': 'Finance Intern', 'value': 'finance intern'}
+    html.Br(),  # create space after dropdown
+
+    dbc.Row(
+        [
+            dbc.Col(
+                [
+                    html.Div(
+                        [
+                            html.Div([], id='bar-plot-container'),
+                        ],
+                    ),
                 ],
-                placeholder='Select Job Title',
-                style={'padding': '2px', 'font-size': '20px', 'text-align-last': 'center', 'flex' : 0.855}
+                sm=8,
+                md=5,
+                lg=6,
+                xl=5,
             ),
-        ], style={'display': 'flex'}),
-        html.Div([
-            html.Div([
-                html.H2('Skills:', style={'margin-right': '3.45em', 'margin-left' : '1em', 'padding' : '5px'})
-            ]),
-            # customize the drop down for skills
-            dcc.Dropdown(
-                id='input-skills',
-                placeholder="Select Skill",
-                style={ 'padding': '2px', 'font-size': '20px', 'text-align-last': 'center', 'flex' : 0.855}
-            ),
-        ], style={'display': 'flex'}),
-    ]),
-    html.Br(), # create space after dropdown
-    html.Div([
-        html.Div([], id='bar-plot-container'),
-        html.Div([], id='map-plot-container'),
-    ], style={'display': 'flex', 'flex-direction': 'row', 'justify-content': 'space-around', 
-              'margin-right' : '2em', 'margin-left' : '2em', 'padding' : '5px'}),
+            dbc.Col(
+                [
+                    html.Div(
+                        [
+                            html.Div([], id='map-plot-container', style={'width': '100%'}),
+                        ],
+                        style={'padding': '0', 'margin': '0'}
+                    ),
+                ],
+                sm=12,
+                md=7,
+                lg=6,
+                xl=6,
+                style={'padding': '0', 'margin': '0'},
+            ), 
+        ], style={'display': 'flex', 'flex-direction': 'row', 'padding': '0', 'margin': '0'},
+    ),
 ])
 
 # create callback component 
@@ -258,9 +357,16 @@ def get_graph(job_title, skills):
         map_fig.update_layout(
             title_text = 'Location of Data Analyst Intern', 
             font = dict(size=16),
+            coloraxis_colorbar = dict(
+                lenmode='fraction',
+                len=0.5,  # Decrease the length of the color scale bar
+                yanchor='middle',
+                thicknessmode='fraction',
+                thickness=0.05  # Decrease the thickness of the color scale bar
+            ),
             legend=dict(x=0.029, y=1.038, font_size=10),
             margin=dict(l=100, r=20, t=70, b=30),
-            geo_scope='usa') # Plot only the USA instead of globe
+            geo_scope='usa'), # Plot only the USA instead of globe
         
         # update the layout of the bar chart
         bar_fig.update_layout(
@@ -327,9 +433,17 @@ def get_graph(job_title, skills):
         map_fig.update_layout(
             title_text = 'Location of Finance Intern',
             font = dict(size=16), 
+            coloraxis_colorbar = dict(
+                lenmode='fraction',
+                len=0.5,  # Decrease the length of the color scale bar
+                yanchor='middle',
+                thicknessmode='fraction',
+                thickness=0.05  # Decrease the thickness of the color scale bar
+            ),
             legend=dict(x=0.029, y=1.038, font_size=10),
             margin=dict(l=100, r=20, t=70, b=30),
             geo_scope='usa') # Plot only the USA instead of globe
+
         # update the parameters for plotly bar chart
         bar_fig = go.Figure(go.Bar(
             x=count_keywords['percentage'],
