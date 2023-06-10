@@ -42,8 +42,7 @@ regexp_tokenizer = nltk.tokenize.RegexpTokenizer(r'\w+')
 all_job = pd.read_csv('joined_job_title.csv')
 all_job.fillna('', inplace=True)
 all_job['description_tokens'] = all_job['description_tokens'].str.replace("'", "")
-all_job['description_tokens'] = all_job['description_tokens'].apply(lambda x: word_tokenizer(x.lower()) \
-                                                                    if len(x.split()) > 1 else regexp_tokenizer.tokenize(x.lower()))
+all_job['description_tokens'] = all_job['description_tokens'].apply(lambda x: word_tokenizer(x.lower()))
 
 # Picked out keywords based on all keywords for the data analyst intern
 keywords_programming = [
