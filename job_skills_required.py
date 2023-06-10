@@ -1,6 +1,7 @@
 # import necessary libraries
 import pandas as pd
 import nltk
+nltk.download('punkt')
 import plotly.graph_objects as go
 import plotly.express as px
 import dash_bootstrap_components as dbc
