@@ -1,7 +1,7 @@
 # import necessary libraries
 import pandas as pd
 import nltk
-from nltk.tokenize import word_tokenize, RegexpTokenizer
+from nltk.tokenize import word_tokenize
 import plotly.graph_objects as go
 import plotly.express as px
 import dash_bootstrap_components as dbc
