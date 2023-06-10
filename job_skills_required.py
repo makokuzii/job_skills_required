@@ -1,29 +1,31 @@
 # import necessary libraries
 import pandas as pd
-import dash
-import dash_html_components as html
-import dash_core_components as dcc
-import dash_bootstrap_components as dbc
-from dash.dependencies import Input, Output, State
+import nltk
 import plotly.graph_objects as go
 import plotly.express as px
-from dash import no_update
+import dash_bootstrap_components as dbc
+import holoviews as hv
+hv.extension('plotly')
+
+from dash.dependencies import Input, Output
+from dash import Dash
+from dash import html
+from dash import dcc
 from dash_bootstrap_templates import load_figure_template
 
 # load the template that i personally liked
 load_figure_template("bootstrap")
 
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
-
+app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 server = app.server
 
 # create a markdown text on the web application
 markdown_text = '''
-### Notes:
+### Realized by Sotheara SOK
 
 
 This project aims to assist MSc students studying Data Management for Finance at Audencia in identifying crucial skills 
-to align with their desired career path after graduation. The program mandates a 4-6 month internship, acting as a vital 
+to align with their desired career path after graduation. The program mandates a **4-6 month internship**, acting as a vital 
 bridge between theoretical knowledge and real-world application. By providing valuable guidance, this project aids 
 students in prioritizing the skills necessary for their chosen career trajectory.
 
@@ -34,8 +36,11 @@ students in prioritizing the skills necessary for their chosen career trajectory
 app.config.suppress_callback_exceptions = True
 
 # Read the automobiles data into pandas dataframe
-job_all = pd.read_csv('joined_job_title.csv', encoding='latin')
-job_all.fillna('', inplace=True)
+tokenizer = nltk.tokenize.RegexpTokenizer(r'\w+')
+all_job = pd.read_csv('joined_job_title.csv')
+all_job.fillna('', inplace=True)
+all_job['description_tokens'] = all_job['description_tokens'].str.replace("'", "")
+all_job['description_tokens'] = all_job['description_tokens'].apply(lambda x: tokenizer.tokenize(x.lower()))
 
 # Picked out keywords based on all keywords for the data analyst intern
 keywords_programming = [
@@ -111,7 +116,7 @@ app.layout = html.Div(children=[
     html.Div([
     # customized the style of the text using markdown
     dcc.Markdown(children=markdown_text, style = {'text-align': 'justify', 'text-align-last': 'left', 
-                                                  'margin-left' : '2em', 'margin-right' : '2em'}),
+                                                  'margin-left' : '2.3em', 'margin-right' : '5em'}),
     ]),
     html.Br(), # create space after markdown
     html.Div([
