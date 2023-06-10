@@ -9,6 +9,5 @@ holoviews
 dash_html_components
 dash_core_components
 dash_bootstrap_components
+nltk.tokenize
 nltk
-word_tokenize
-RegexpTokenizer
