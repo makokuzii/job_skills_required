@@ -1,4 +1,4 @@
-dash==2.6.0
+dash
 pandas
 gunicorn
 dash_bootstrap_templates
@@ -9,5 +9,5 @@ holoviews
 dash_html_components
 dash_core_components
 dash_bootstrap_components
-nltk.tokenize
 nltk
+-m pip install --upgrade pip
