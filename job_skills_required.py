@@ -17,6 +17,7 @@ from dash_bootstrap_templates import load_figure_template
 # load the template that i personally liked
 load_figure_template("bootstrap")
 
+# make our result on the website adapt to the screen of the device 
 app = Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP],
             meta_tags=[{'name': 'viewport',
                         'content': 'width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0,'}]
@@ -39,7 +40,7 @@ students in prioritizing the skills necessary for their chosen career trajectory
 # Clear the layout and do not display exception till callback gets executed
 app.config.suppress_callback_exceptions = True
 
-# Read the automobiles data into pandas dataframe
+# Read the dataframe
 word_tokenizer = nltk.tokenize.word_tokenize
 all_job = pd.read_csv('joined_job_title.csv')
 all_job.fillna('', inplace=True)
@@ -75,6 +76,7 @@ keywords_cloud_tools = [
 'aws', 'azure', 'gcp', 'snowflake', 'redshift', 'bigquery', 'aurora',
 ]
 
+# total keywords
 keywords = keywords_programming + keywords_libraries + keywords_analyst_tools + keywords_cloud_tools 
 
 # Picked out keywords based on all keywords for the finance intern
@@ -136,7 +138,7 @@ app.layout = html.Div(children=[
                                 'text-align': 'justify',
                                 'text-align-last': 'left',
                                 'margin-left': '2.3em',
-                                'margin-right': '5em'
+                                'margin-right': '2.3em',
                             }
                         ),
                     ]
@@ -286,8 +288,6 @@ def update_skill_dropdown(job_title):
      Output(component_id='map-plot-container', component_property='children')],
     [Input(component_id='input-job-title', component_property='value'),
      Input(component_id='input-skills', component_property='value')]
-    
-    #[State("bar-plot-container", "children"), State("map-plot-container", "children")]
 )
 # update the bar plot based on the job title and skills
 def get_graph(job_title, skills):
@@ -387,9 +387,7 @@ def get_graph(job_title, skills):
                 domain=[0, 1],
             ),
             legend=dict(x=0.029, y=1.038, font_size=10),
-            margin=dict(l=100, r=20, t=70, b=30),
-            #paper_bgcolor='rgb(248, 248, 255)',
-            #plot_bgcolor='rgb(248, 248, 255)',
+            margin=dict(l=100, r=20, t=70, b=30)
         )        
         return dcc.Graph(id='bar-plot',figure=bar_fig), dcc.Graph(id='map-plot', figure=map_fig)
     
@@ -472,9 +470,7 @@ def get_graph(job_title, skills):
                 domain=[0, 1],
             ),
             legend=dict(x=0.029, y=1.038, font_size=10),
-            margin=dict(l=100, r=20, t=70, b=30),
-            #paper_bgcolor='rgb(248, 248, 255)',
-            #plot_bgcolor='rgb(248, 248, 255)',
+            margin=dict(l=100, r=20, t=70, b=30)
         )
 
         return dcc.Graph(id='bar-plot',figure=bar_fig), dcc.Graph(id='map-plot', figure=map_fig)
@@ -483,4 +479,3 @@ def get_graph(job_title, skills):
 
 if __name__ == '__main__':
     app.run_server(debug = False)
-    
